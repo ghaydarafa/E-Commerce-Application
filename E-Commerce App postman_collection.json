@@ -1,0 +1,1012 @@
+{
+	"info": {
+		"_postman_id": "4b1c461c-1d75-43a1-9e44-e40a71fe5684",
+		"name": "E-Commerce App SPLE",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23501791"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": 11,\r\n    \"firstName\": \"Kalei\",\r\n    \"lastName\": \"Darmawan\",\r\n    \"mobileNumber\": \"0815391980\",\r\n    \"email\": \"kalei@gmail.com\",\r\n    \"password\": \"123456\",\r\n    \"roles\": [\r\n      {\r\n        \"roleId\": 1,\r\n        \"roleName\": \"Customer\"\r\n      }\r\n    ],\r\n    \"address\": {\r\n      \"addressId\": 104,\r\n      \"street\": \"Jl. Rusuh No. 2\",\r\n      \"buildingName\": \"Komplek Elite\",\r\n      \"city\": \"Bogor\",\r\n      \"state\": \"Jawa Barat\",\r\n      \"country\": \"Indonesia\",\r\n      \"pincode\": \"301923\"\r\n    },\r\n    \"cart\": {\r\n    //   \"cartId\": 203,\r\n    //   \"totalPrice\": 300000,\r\n    //   \"products\": [\r\n    //     {\r\n    //       \"productId\": 304,\r\n    //       \"productName\": \"Samsung Galaxy S22\",\r\n    //       \"image\": \"https://example.com/galaxy-s22.jpg\",\r\n    //       \"description\": \"Smartphone flagship dari Samsung\",\r\n    //       \"quantity\": 1,\r\n    //       \"price\": 16000000,\r\n    //       \"discount\": 2000000,\r\n    //       \"specialPrice\": 14000000\r\n    //     },\r\n    //     {\r\n    //       \"productId\": 305,\r\n    //       \"productName\": \"AirPods Pro\",\r\n    //       \"image\": \"https://example.com/airpods-pro.jpg\",\r\n    //       \"description\": \"Earbuds wireless dengan noise cancellation\",\r\n    //       \"quantity\": 1,\r\n    //       \"price\": 4000000,\r\n    //       \"discount\": 500000,\r\n    //       \"specialPrice\": 3500000\r\n    //     }\r\n    //   ]\r\n    }\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/api/register",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var responseText = pm.response.text();\r",
+									"\r",
+									"if (responseText.includes(\"jwt-token\")) {\r",
+									"    var responseJson = JSON.parse(responseText);\r",
+									"    pm.collectionVariables.set(\"token\", responseJson[\"jwt-token\"]);\r",
+									"    console.log(\"Token JWT successfully saved to collection variables!\");\r",
+									"} else {\r",
+									"    console.log(\"JWT token not found in the response!\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"admin@gmail.com\",\r\n  \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/api/login",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Address",
+			"item": [
+				{
+					"name": "Create Address",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"street\": \"Jl. Krukut No. 2\",\n    \"buildingName\": \"Komplek Elite\",\n    \"city\": \"Bogor\",\n    \"state\": \"Jawa Barat\",\n    \"country\": \"Indonesia\",\n    \"pincode\": \"301923\"\n}"
+						},
+						"url": {
+							"raw": "{{localhost}}/api/admin/address",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"address"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Addresses",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{localhost}}/api/admin/addresses",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Address by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{localhost}}/api/admin/addresses/19",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"addresses",
+								"19"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Address",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"addressId\": 19,\n    \"street\": \"Jl. Rusuh No. 2\",\n    \"buildingName\": \"Komplek Elite\",\n    \"city\": \"Bogor\",\n    \"state\": \"Jawa Tengah\",\n    \"country\": \"Indonesia\",\n    \"pincode\": \"301923\"\n}"
+						},
+						"url": {
+							"raw": "{{localhost}}/api/admin/addresses/19",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"addresses",
+								"19"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Address",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{localhost}}/api/admin/addresses/20",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"addresses",
+								"20"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "Create Category",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"categoryName\": \"Foods\"\n}"
+						},
+						"url": {
+							"raw": "{{localhost}}/api/admin/category",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Category",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"categoryName\": \"Updated Category\"\n}"
+						},
+						"url": {
+							"raw": "{{localhost}}/api/admin/categories/11",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"categories",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Category",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{localhost}}/api/admin/categories/11",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"categories",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Public Categories",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/api/public/categories",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "Create Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"productId\": 16,\n    \"productName\": \"New laptop lagi\",\n    \"image\": \"laptopnew.png\",\n    \"description\": \"laptop baru\",\n    \"quantity\": 19,\n    \"price\": 10500000,\n    \"discount\": 200000,\n    \"specialPrice\": 10300000,\n    \"category\": {\n        \"categoryId\": 12,\n        \"categoryName\": \"New Category\",\n        \"products\": [\n            \n        ]\n    },\n    \"products\": [\n        {\n            // \"cartItemId\": 0,\n            // \"cart\": {\n            //     \"cartId\": 0,\n            //     \"user\": {\n            //         \"userId\": 0,\n            //         \"firstName\": \"rBMHE\",\n            //         \"lastName\": \"uKYUhahZXqMBfZOZhsAZ\",\n            //         \"mobileNumber\": \"7519269410\",\n            //         \"email\": \"string\",\n            //         \"password\": \"string\",\n            //         \"roles\": [\n            //             {\n            //                 \"roleId\": 0,\n            //                 \"roleName\": \"string\"\n            //             }\n            //         ],\n            //         \"addresses\": [\n            //             {\n            //                 \"addressId\": 0,\n            //                 \"street\": \"string\",\n            //                 \"buildingName\": \"string\",\n            //                 \"city\": \"string\",\n            //                 \"state\": \"string\",\n            //                 \"country\": \"string\",\n            //                 \"pincode\": \"string\",\n            //                 \"users\": [\n            //                     \"string\"\n            //                 ]\n            //             }\n            //         ],\n            //         \"cart\": \"string\"\n            //     },\n            //     \"cartItems\": [\n            //         \"string\"\n            //     ],\n            //     \"totalPrice\": 0\n            // },\n            // \"product\": \"string\",\n            // \"quantity\": 0,\n            // \"discount\": 0,\n            // \"productPrice\": 0\n        }\n    ],\n    \"orderItems\": [\n        {\n            // \"orderItemId\": 0,\n            // \"product\": \"string\",\n            // \"order\": {\n            //     \"orderId\": 0,\n            //     \"email\": \"string\",\n            //     \"orderItems\": [\n            //         \"string\"\n            //     ],\n            //     \"orderDate\": \"2025-02-10\",\n            //     \"payment\": {\n            //         \"paymentId\": 0,\n            //         \"order\": \"string\",\n            //         \"paymentMethod\": \"string\"\n            //     },\n            //     \"totalAmount\": 0,\n            //     \"orderStatus\": \"string\"\n            // },\n            // \"quantity\": 0,\n            // \"discount\": 0,\n            // \"orderedProductPrice\": 0\n        }\n    ]\n}\n// {\n//     \"productId\": 16,\n//     \"productName\": \"Laptop Asus ROG neww\",\n//     \"image\": \"https://example.com/laptop.jpg\",\n//     \"description\": \"Gaming laptop high performance\",\n//     \"quantity\": 10,\n//     \"price\": 2.0E7,\n//     \"discount\": 5000000.0,\n//     \"specialPrice\": -9.9998E11\n// }"
+						},
+						"url": {
+							"raw": "{{localhost}}/api/admin/categories/12/product",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"categories",
+								"12",
+								"product"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Product",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productId\": 16,\n    \"productName\": \"New laptop lagi\",\n    \"image\": \"laptopnew.png\",\n    \"description\": \"laptop baru\",\n    \"quantity\": 19,\n    \"price\": 10500000,\n    \"discount\": 200000,\n    \"specialPrice\": 10300000,\n    \"category\": {\n        \"categoryId\": 12,\n        \"categoryName\": \"New Category\",\n        \"products\": [\n            \n        ]\n    },\n    \"products\": [\n        {\n            // \"cartItemId\": 0,\n            // \"cart\": {\n            //     \"cartId\": 0,\n            //     \"user\": {\n            //         \"userId\": 0,\n            //         \"firstName\": \"rBMHE\",\n            //         \"lastName\": \"uKYUhahZXqMBfZOZhsAZ\",\n            //         \"mobileNumber\": \"7519269410\",\n            //         \"email\": \"string\",\n            //         \"password\": \"string\",\n            //         \"roles\": [\n            //             {\n            //                 \"roleId\": 0,\n            //                 \"roleName\": \"string\"\n            //             }\n            //         ],\n            //         \"addresses\": [\n            //             {\n            //                 \"addressId\": 0,\n            //                 \"street\": \"string\",\n            //                 \"buildingName\": \"string\",\n            //                 \"city\": \"string\",\n            //                 \"state\": \"string\",\n            //                 \"country\": \"string\",\n            //                 \"pincode\": \"string\",\n            //                 \"users\": [\n            //                     \"string\"\n            //                 ]\n            //             }\n            //         ],\n            //         \"cart\": \"string\"\n            //     },\n            //     \"cartItems\": [\n            //         \"string\"\n            //     ],\n            //     \"totalPrice\": 0\n            // },\n            // \"product\": \"string\",\n            // \"quantity\": 0,\n            // \"discount\": 0,\n            // \"productPrice\": 0\n        }\n    ],\n    \"orderItems\": [\n        {\n            // \"orderItemId\": 0,\n            // \"product\": \"string\",\n            // \"order\": {\n            //     \"orderId\": 0,\n            //     \"email\": \"string\",\n            //     \"orderItems\": [\n            //         \"string\"\n            //     ],\n            //     \"orderDate\": \"2025-02-10\",\n            //     \"payment\": {\n            //         \"paymentId\": 0,\n            //         \"order\": \"string\",\n            //         \"paymentMethod\": \"string\"\n            //     },\n            //     \"totalAmount\": 0,\n            //     \"orderStatus\": \"string\"\n            // },\n            // \"quantity\": 0,\n            // \"discount\": 0,\n            // \"orderedProductPrice\": 0\n        }\n    ]\n}\n// {\n//     \"productId\": 16,\n//     \"productName\": \"Laptop Asus ROG neww\",\n//     \"image\": \"https://example.com/laptop.jpg\",\n//     \"description\": \"Gaming laptop high performance\",\n//     \"quantity\": 10,\n//     \"price\": 2.0E7,\n//     \"discount\": 5000000.0,\n//     \"specialPrice\": -9.9998E11\n// }"
+								},
+								"url": {
+									"raw": "{{localhost}}/api/admin/categories/12/product",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"categories",
+										"12",
+										"product"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 10 Feb 2025 12:08:57 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"productId\": 13,\n    \"productName\": \"New laptop lagi\",\n    \"image\": \"default.png\",\n    \"description\": \"laptop baru\",\n    \"quantity\": 19,\n    \"price\": 10500000,\n    \"discount\": 200000,\n    \"specialPrice\": -20989500000\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"productId\": 11,\n    \"productName\": \"New laptop\",\n    \"image\": \"default.png\",\n    \"description\": \"laptop baru\",\n    \"quantity\": 17,\n    \"price\": 120000,\n    \"discount\": 20000,\n    \"specialPrice\": 100000\n}"
+						},
+						"url": {
+							"raw": "{{localhost}}/api/admin/products/:productId",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"products",
+								":productId"
+							],
+							"variable": [
+								{
+									"key": "productId",
+									"value": "11"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product Image",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/ghayd/Pictures/Screenshots/Screenshot 2025-02-10 184254.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{localhost}}/api/admin/products/:productId/image",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"products",
+								":productId",
+								"image"
+							],
+							"variable": [
+								{
+									"key": "productId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{localhost}}/api/admin/products/13",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"products",
+								"13"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Products by Category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/api/public/categories/1/products",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"categories",
+								"1",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Products",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/api/public/products",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Products by Keyword",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/api/public/products/keyword/laptop",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"products",
+								"keyword",
+								"laptop"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "Get All Orders",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{localhost}}/api/admin/orders",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Order Status (Admin)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{localhost}}/api/admin/users/emily@gmail.com/orders/1/orderStatus/shipped",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"users",
+								"emily@gmail.com",
+								"orders",
+								"1",
+								"orderStatus",
+								"shipped"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{localhost}}/api/public/users/jac@gmail.com/carts/6/payments/qris/order",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"users",
+								"jac@gmail.com",
+								"carts",
+								"6",
+								"payments",
+								"qris",
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Orders (Public)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{localhost}}/api/public/users/emily@gmail.com/orders",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"users",
+								"emily@gmail.com",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Order Details (Public)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{localhost}}/api/public/users/emily@gmail.com/orders/1",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"users",
+								"emily@gmail.com",
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cart",
+			"item": [
+				{
+					"name": "Get All Carts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{localhost}}/api/admin/carts",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"carts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Product from Cart",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{localhost}}/api/public/carts/16/product/11",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"carts",
+								"16",
+								"product",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product Quantity in Cart",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{localhost}}/api/public/carts/16/products/10/quantity/3",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"carts",
+								"16",
+								"products",
+								"10",
+								"quantity",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Product to Cart",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{localhost}}/api/public/carts/16/products/5/quantity/1",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"carts",
+								"16",
+								"products",
+								"5",
+								"quantity",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Cart Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{localhost}}/api/public/users/nat@gmail.com/carts/15",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"users",
+								"nat@gmail.com",
+								"carts",
+								"15"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "localhost",
+			"value": "http://localhost:8080",
+			"type": "default"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
