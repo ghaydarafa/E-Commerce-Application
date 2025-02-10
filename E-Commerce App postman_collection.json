@@ -720,7 +720,7 @@
 					"response": []
 				},
 				{
-					"name": "Update Order Status (Admin)",
+					"name": "Update Order Status",
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -779,7 +779,7 @@
 					"response": []
 				},
 				{
-					"name": "Get User Orders (Public)",
+					"name": "Get User Orders",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -805,7 +805,7 @@
 					"response": []
 				},
 				{
-					"name": "Get Order Details (Public)",
+					"name": "Get Order Details",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -967,6 +967,157 @@
 								"nat@gmail.com",
 								"carts",
 								"15"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get All Users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/api/admin/users",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/api/admin/users/:userId",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "14"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/api/public/users/:userId",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n            \"userId\": 1,\n            \"firstName\": \"Jacqueline\",\n            \"lastName\": \"Hathaway\",\n            \"mobileNumber\": \"0892345678\",\n            \"email\": \"jac@gmail.com\",\n            \"password\": \"$2a$10$imBlylz9FvofQHAHaih3qOw/zRNAu6WmZU.7z/rwnAhlHaywSoZ9y\",\n            \"roles\": [\n                {\n                    \"roleId\": 1,\n                    \"roleName\": \"Customer\"\n                },\n                {\n                    \"roleId\": 102,\n                    \"roleName\": \"USER\"\n                }\n            ],\n            \"address\": {\n                \"addressId\": 8,\n                \"street\": \"Jl. Sudirman No. 123\",\n                \"buildingName\": \"Apartemen Harmoni\",\n                \"city\": \"Jakarta\",\n                \"state\": \"DKI Jakarta\",\n                \"country\": \"Indonesia\",\n                \"pincode\": \"101112\"\n            },\n            \"cart\": {\n                \"cartId\": 6,\n                \"totalPrice\": 0.0,\n                \"products\": []\n            }\n        },"
+						},
+						"url": {
+							"raw": "{{localhost}}/api/public/users/:userId",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
 							]
 						}
 					},
