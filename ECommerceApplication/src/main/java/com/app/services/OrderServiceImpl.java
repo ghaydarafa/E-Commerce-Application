@@ -65,12 +65,20 @@ public class OrderServiceImpl implements OrderService {
 	public ModelMapper modelMapper;
 
 	@Override
-	public OrderDTO placeOrder(String email, Long cartId, String paymentMethod) {
+	public OrderDTO placeOrder(String email, Long cartId, String cardNumber, String cvc) {
 
 		Cart cart = cartRepo.findCartByEmailAndCartId(email, cartId);
 
 		if (cart == null) {
 			throw new ResourceNotFoundException("Cart", "cartId", cartId);
+		}
+
+		if (cardNumber == null || cardNumber.length() != 16) {
+			throw new APIException("Credit Card payments require a valid 16-digit card number.");
+		}
+
+		if (cvc == null || cvc.length() != 3) {
+			throw new APIException("Credit Card payments require a valid 3-digit CVC.");
 		}
 
 		Order order = new Order();
@@ -83,8 +91,10 @@ public class OrderServiceImpl implements OrderService {
 
 		Payment payment = new Payment();
 		payment.setOrder(order);
-		payment.setPaymentMethod(paymentMethod);
-
+		payment.setPaymentMethod("Credit Card");
+		payment.setCardNumber(cardNumber);
+		payment.setCvc(cvc);
+		
 		payment = paymentRepo.save(payment);
 
 		order.setPayment(payment);
