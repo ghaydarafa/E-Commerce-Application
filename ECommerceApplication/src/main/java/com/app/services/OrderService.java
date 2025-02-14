@@ -7,7 +7,7 @@ import com.app.payloads.OrderResponse;
 
 public interface OrderService {
 	
-	OrderDTO placeOrder(String email, Long cartId, String cardNumber, String cvc);
+	OrderDTO placeOrder(String email, Long cartId, String paymentMethod, String cardNumber, String cvc);
 	
 	OrderDTO getOrder(String email, Long orderId);
 	

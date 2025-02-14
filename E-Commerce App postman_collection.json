@@ -749,7 +749,7 @@
 					"response": []
 				},
 				{
-					"name": "Create Order",
+					"name": "Create Order CC Only",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -758,20 +758,23 @@
 								"value": "Bearer {{token}}"
 							}
 						],
+						"body": {
+							"mode": "raw",
+							"raw": "@PostMapping(\"/public/order\")\r\npublic ResponseEntity<OrderDTO> orderProducts(@RequestBody @Valid OrderRequestDTO orderRequest) {\r\n    OrderDTO order = orderService.placeOrder(\r\n        orderRequest.getEmail(),\r\n        orderRequest.getCartId(),\r\n        orderRequest.getPaymentMethod(),\r\n        orderRequest.getCardNumber(),\r\n        orderRequest.getCvc()\r\n    );\r\n    \r\n    return new ResponseEntity<>(order, HttpStatus.CREATED);\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{localhost}}/api/public/users/jac@gmail.com/carts/6/payments/qris/order",
+							"raw": "{{localhost}}/api/public/order",
 							"host": [
 								"{{localhost}}"
 							],
 							"path": [
 								"api",
 								"public",
-								"users",
-								"jac@gmail.com",
-								"carts",
-								"6",
-								"payments",
-								"qris",
 								"order"
 							]
 						}

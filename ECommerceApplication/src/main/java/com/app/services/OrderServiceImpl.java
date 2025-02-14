@@ -65,20 +65,23 @@ public class OrderServiceImpl implements OrderService {
 	public ModelMapper modelMapper;
 
 	@Override
-	public OrderDTO placeOrder(String email, Long cartId, String cardNumber, String cvc) {
+	public OrderDTO placeOrder(String email, Long cartId, String paymentMethod, String cardNumber, String cvc) {
+
+		if (!"credit_card".equalsIgnoreCase(paymentMethod)) {
+			throw new IllegalArgumentException("Only 'credit_card' is allowed as payment method.");
+		}
+	
+		if (cardNumber == null || !cardNumber.matches("\\d{16}")) {
+			throw new IllegalArgumentException("Card number must be exactly 16 digits.");
+		}
+		if (cvc == null || !cvc.matches("\\d{3}")) {
+			throw new IllegalArgumentException("CVC must be exactly 3 digits.");
+		}
 
 		Cart cart = cartRepo.findCartByEmailAndCartId(email, cartId);
 
 		if (cart == null) {
 			throw new ResourceNotFoundException("Cart", "cartId", cartId);
-		}
-
-		if (cardNumber == null || cardNumber.length() != 16) {
-			throw new APIException("Credit Card payments require a valid 16-digit card number.");
-		}
-
-		if (cvc == null || cvc.length() != 3) {
-			throw new APIException("Credit Card payments require a valid 3-digit CVC.");
 		}
 
 		Order order = new Order();
@@ -91,10 +94,10 @@ public class OrderServiceImpl implements OrderService {
 
 		Payment payment = new Payment();
 		payment.setOrder(order);
-		payment.setPaymentMethod("Credit Card");
+		payment.setPaymentMethod(paymentMethod);
+
 		payment.setCardNumber(cardNumber);
-		payment.setCvc(cvc);
-		
+	
 		payment = paymentRepo.save(payment);
 
 		order.setPayment(payment);

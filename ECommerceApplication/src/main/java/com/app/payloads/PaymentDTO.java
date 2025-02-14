@@ -11,5 +11,4 @@ public class PaymentDTO {
 	private Long paymentId;
 	private String paymentMethod;
 	private String cardNumber;
-	private String cvc;
 }
