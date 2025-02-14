@@ -107,17 +107,18 @@ INSERT INTO cart_items (cart_item_id, discount, product_price, quantity, cart_id
 -- Data for Name: payments; Type: TABLE DATA; 
 --
 
-INSERT INTO payments (payment_id, payment_method) VALUES (1, 'qris');
-INSERT INTO payments (payment_id, payment_method) VALUES (3, 'ecommercepay');
-INSERT INTO payments (payment_id, payment_method) VALUES (5, 'transfer-mandiri');
-INSERT INTO payments (payment_id, payment_method) VALUES (2, 'transfer-bsi');
-INSERT INTO payments (payment_id, payment_method) VALUES (4, 'transfer-bca');
-INSERT INTO payments (payment_id, payment_method) VALUES (6, 'transfer-bri');
-INSERT INTO payments (payment_id, payment_method) VALUES (7, 'transfer-bni');
-INSERT INTO payments (payment_id, payment_method) VALUES (8, 'transfer-maybank');
-INSERT INTO payments (payment_id, payment_method) VALUES (9, 'transfer-bni');
-INSERT INTO payments (payment_id, payment_method) VALUES (10, 'transfer-bni');
-INSERT INTO payments (payment_id, payment_method) VALUES (11, 'qris');
+INSERT INTO payments (payment_id, payment_method, card_number) VALUES (1, 'qris', NULL);
+INSERT INTO payments (payment_id, payment_method, card_number) VALUES (3, 'ecommercepay', NULL);
+INSERT INTO payments (payment_id, payment_method, card_number) VALUES (5, 'transfer-mandiri', NULL);
+INSERT INTO payments (payment_id, payment_method, card_number) VALUES (2, 'credit_card', '4VbBcrS5W2Ji+AyHw5d5P6do+mdGKSgOMcFcvJwfXas=');
+INSERT INTO payments (payment_id, payment_method, card_number) VALUES (4, 'transfer-bca', NULL);
+INSERT INTO payments (payment_id, payment_method, card_number) VALUES (6, 'transfer-bri', NULL);
+INSERT INTO payments (payment_id, payment_method, card_number) VALUES (7, 'transfer-bni', NULL);
+INSERT INTO payments (payment_id, payment_method, card_number) VALUES (8, 'credit_card', '4VbBcrS5W2Ji+AyHw5d5P6do+mdGKSgOMcFcvJwfXas=');
+INSERT INTO payments (payment_id, payment_method, card_number) VALUES (9, 'transfer-bni', NULL);
+INSERT INTO payments (payment_id, payment_method, card_number) VALUES (10, 'transfer-bni', NULL);
+INSERT INTO payments (payment_id, payment_method, card_number) VALUES (11, 'qris', NULL);
+
 
 
 --
